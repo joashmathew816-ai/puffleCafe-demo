@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puffle Cafe | Guelph, ON</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFAF4;
+      --panel:   #FFF5E6;
+      --dark:    #1A0F00;
+      --brown:   #3D1F00;
+      --caramel: #C2692A;
+      --peach:   #F5A878;
+      --matcha:  #6B8F5E;
+      --cream:   #FDE9CC;
+      --yellow:  #F5D068;
+      --muted:   #7A5C3A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3.5rem;
+      background: rgba(255,250,244,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(194,105,42,0.12);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--caramel);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--dark); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: var(--brown);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--caramel); }
+    .nav-cta {
+      background: var(--caramel) !important;
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--brown) !important; }
+
+    /* ── BUTTONS ── */
+    .btn-fill {
+      background: var(--dark);
+      color: #fff;
+      padding: 0.8rem 1.8rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      display: inline-block;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-fill:hover { background: var(--caramel); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1.5px solid var(--brown);
+      color: var(--brown);
+      padding: 0.8rem 1.8rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--caramel); color: var(--caramel); transform: translateY(-2px); }
+
+    .btn-ghost {
+      color: var(--caramel);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 0.2s;
+    }
+    .btn-ghost:hover { gap: 0.65rem; }
+    .btn-ghost::after { content: '→'; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      padding: 8rem 3.5rem 4rem;
+      gap: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -15%; right: -12%;
+      width: 580px; height: 580px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--cream) 0%, var(--panel) 55%, transparent 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-text { position: relative; z-index: 1; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--cream);
+      border: 1px solid rgba(194,105,42,0.22);
+      border-radius: 100px;
+      padding: 0.32rem 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      color: var(--caramel);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
+    .hero-tag::before { content: '★'; font-size: 0.65rem; }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      color: var(--dark);
+      margin-bottom: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 .accent { color: var(--caramel); font-style: italic; font-weight: 400; }
+    .hero h1 .pill {
+      display: inline-block;
+      background: var(--yellow);
+      border-radius: 100px;
+      padding: 0 0.35em;
+      line-height: 1.15;
+      color: var(--dark);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.78;
+      color: var(--muted);
+      max-width: 450px;
+      margin-bottom: 2.2rem;
+    }
+    .hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center; }
+
+    /* hero image */
+    .hero-visual { position: relative; z-index: 1; height: 520px; }
+    .hero-img-main {
+      position: absolute;
+      top: 0; right: 0;
+      width: 78%; height: 76%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(60,30,0,0.15);
+    }
+    .hero-img-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-img-small {
+      position: absolute;
+      bottom: 20px; left: 0;
+      width: 50%; height: 44%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 5px solid var(--bg);
+      box-shadow: 0 14px 36px rgba(60,30,0,0.12);
+    }
+    .hero-img-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-badge {
+      position: absolute;
+      top: 24px; left: 8px;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 14px;
+      padding: 0.8rem 1rem;
+      font-size: 0.76rem;
+      font-weight: 600;
+      line-height: 1.5;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+    .hero-badge .big {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--yellow);
+      display: block;
+      line-height: 1;
+    }
+    .hero-hours {
+      position: absolute;
+      bottom: 8px; right: 4px;
+      background: var(--matcha);
+      color: #fff;
+      border-radius: 100px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.73rem;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(107,143,94,0.3);
+      z-index: 2;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--caramel);
+      padding: 0.8rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 24s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Fraunces', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+      padding: 0 2.2rem;
+    }
+    .marquee-item span { color: var(--yellow); margin-left: 2.2rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION LABEL ── */
+    .label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 0.55rem;
+    }
+
+    /* ── THREE CARDS ROW ── */
+    .cards-row {
+      padding: 6rem 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 20px 50px rgba(60,30,0,0.09);
+    }
+    .card-img {
+      width: 100%;
+      aspect-ratio: 3/2;
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.4s;
+    }
+    .card:hover .card-img img { transform: scale(1.05); }
+    .card-body {
+      padding: 1.7rem 1.8rem 2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-body h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.01em;
+    }
+    .card-body h2 em { font-style: italic; font-weight: 400; color: var(--caramel); }
+    .card-body p {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 1.6rem;
+    }
+
+    /* ── VISIT BANNER ── */
+    .visit-banner {
+      background: var(--dark);
+      padding: 5rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .visit-banner::before {
+      content: '';
+      position: absolute;
+      top: -60%; right: 5%;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,105,42,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .visit-banner .label { color: var(--peach); }
+    .visit-banner h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+    .visit-banner h2 em { font-style: italic; font-weight: 400; color: var(--peach); }
+    .visit-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.2rem;
+    }
+    .visit-info span {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 400;
+    }
+    .visit-info span strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+    .visit-banner .btn-fill {
+      background: var(--caramel);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .visit-banner .btn-fill:hover { background: var(--peach); color: var(--dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--caramel);
+    }
+    .footer-links { display: flex; gap: 1.6rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.22); }
+
+    /* ── FADE IN ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0s; }
+    .stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.1s; }
+    .stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.2s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6.5rem 1.5rem 3rem; }
+      .hero-visual { display: none; }
+      .cards-row { grid-template-columns: 1fr; padding: 3.5rem 1.5rem; }
+      .visit-banner { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+      footer { padding: 1.8rem 1.5rem; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Puffle<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">Menu</a></li>
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">About</a></li>
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">Drinks</a></li>
+    <li><a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank">Visit</a></li>
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="nav-cta">Instagram ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Now open in Guelph, ON</div>
+    <h1>
+      Sweet,<br>
+      <span class="accent">Savoury,</span><br>
+      <span class="pill">Unforgettable.</span>
+    </h1>
+    <p class="hero-desc">
+      Puffle waffles, crepes, Japanese cheesecake, cream puffs — and drinks you won't find anywhere else in Guelph. Come for the food. Stay for the vibe.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-fill">See Our Menu</a>
+      <a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank" class="btn-outline">Find Us</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <!-- REPLACE with real Puffle Cafe food photos from Instagram -->
+    <div class="hero-img-main">
+      <img src="C:\Users\febam\Desktop\Businesses\Puffle Cafe\Puffle Cafe food.jpg" alt="Puffle Cafe food" />
+    </div>
+    <div class="hero-img-small">
+      <img src="C:\Users\febam\Desktop\Businesses\Puffle Cafe\Drinks.jpg" alt="Puffle Cafe drinks" />
+    </div>
+    <div class="hero-badge">
+      <span class="big">80+</span>
+      menu items
+    </div>
+    <div class="hero-hours">Open Today · 10am – 8pm</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Puffle Waffles <span>✦</span></span>
+    <span class="marquee-item">Savory Crepes <span>✦</span></span>
+    <span class="marquee-item">Sweet Crepes <span>✦</span></span>
+    <span class="marquee-item">Japanese Cheesecake <span>✦</span></span>
+    <span class="marquee-item">Cream Puffs <span>✦</span></span>
+    <span class="marquee-item">Vietnamese Drip Coffee <span>✦</span></span>
+    <span class="marquee-item">London Fog <span>✦</span></span>
+    <span class="marquee-item">Iced Strawberry Matcha <span>✦</span></span>
+    <span class="marquee-item">Thai Milk Tea <span>✦</span></span>
+    <span class="marquee-item">Egg Coffee <span>✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Puffle Waffles <span>✦</span></span>
+    <span class="marquee-item">Savory Crepes <span>✦</span></span>
+    <span class="marquee-item">Sweet Crepes <span>✦</span></span>
+    <span class="marquee-item">Japanese Cheesecake <span>✦</span></span>
+    <span class="marquee-item">Cream Puffs <span>✦</span></span>
+    <span class="marquee-item">Vietnamese Drip Coffee <span>✦</span></span>
+    <span class="marquee-item">London Fog <span>✦</span></span>
+    <span class="marquee-item">Iced Strawberry Matcha <span>✦</span></span>
+    <span class="marquee-item">Thai Milk Tea <span>✦</span></span>
+    <span class="marquee-item">Egg Coffee <span>✦</span></span>
+  </div>
+</div>
+
+<!-- THREE SECTION CARDS -->
+<div class="cards-row stagger">
+
+  <!-- MENU CARD -->
+  <div class="card">
+    <!-- REPLACE with a real food photo, e.g. src="crepe.jpg" -->
+    <div class="card-img"><img src="C:\Users\febam\Desktop\Businesses\Puffle Cafe\Menu.jpg" alt="Puffle Cafe menu" /></div>
+    <div class="card-body">
+      <p class="label">Menu</p>
+      <h2>Crafted with <em>love</em>.</h2>
+      <p>
+        Cheese puffle waffles, chicken crepes, custard cream puffs, Japanese cheesecake — plus sweet crepes loaded with strawberries, Nutella, and more. Something for everyone.
+      </p>
+      <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-ghost">See Full Menu</a>
+    </div>
+  </div>
+
+  <!-- DRINKS CARD -->
+  <div class="card">
+    <!-- REPLACE with a real drinks photo, e.g. src="drinks.jpg" -->
+    <div class="card-img"><img src="C:\Users\febam\Desktop\Businesses\Puffle Cafe\Drinks2.jpg" alt="Puffle Cafe drinks" /></div>
+    <div class="card-body">
+      <p class="label">Drinks</p>
+      <h2>Sips you won't find <em>anywhere else.</em></h2>
+      <p>
+        Vietnamese drip coffee, London Fog, iced strawberry matcha, egg coffee, Thai milk tea, and more. Every drink is made to pair perfectly with your order.
+      </p>
+      <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-ghost">See All Drinks</a>
+    </div>
+  </div>
+
+  <!-- ABOUT CARD -->
+  <div class="card">
+    <!-- REPLACE with a real interior/café photo, e.g. src="interior.jpg" -->
+    <div class="card-img"><img src="C:\Users\febam\Desktop\Businesses\Puffle Cafe\Interior.jpg" alt="Puffle Cafe interior" /></div>
+    <div class="card-body">
+      <p class="label">About Us</p>
+      <h2>Delicious food <em>everyone</em> can appreciate.</h2>
+      <p>
+        A cozy Guelph café serving up unique, carefully crafted food and drinks in a warm, welcoming atmosphere. Fantastic vegetarian options available. Perfect for a solo visit or a gathering with friends.
+      </p>
+      <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-ghost">Learn More</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- VISIT BANNER -->
+<section class="visit-banner fade-up">
+  <div>
+    <p class="label">Come Visit</p>
+    <h2>Find us in <em>Guelph.</em></h2>
+    <div class="visit-info">
+      <span>📍 <strong>219 Silvercreek Pkwy N, Unit 7 — Guelph, ON</strong></span>
+      <span>🕙 <strong>Sun–Thu:</strong> 10am – 6pm &nbsp;|&nbsp; <strong>Fri–Sat:</strong> 10am – 8pm</span>
+      <span>📞 <strong>(519) 265-2200</strong> &nbsp;·&nbsp; ✉️ <strong>pufflecafe7@gmail.com</strong></span>
+    </div>
+  </div>
+  <a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank" class="btn-fill">Get Directions</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Puffle.</div>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">Menu</a></li>
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">Drinks</a></li>
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">About</a></li>
+    <li><a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank">Visit</a></li>
+    <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank">Instagram</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Puffle Cafe · Guelph, ON · Demo redesign concept</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
