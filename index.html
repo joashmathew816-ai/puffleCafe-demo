@@ -29,16 +29,18 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       NAV
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3.5rem;
-      background: rgba(255,250,244,0.94);
+      background: rgba(255,250,244,0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(194,105,42,0.12);
     }
@@ -48,9 +50,17 @@
       font-weight: 800;
       color: var(--caramel);
       text-decoration: none;
+      z-index: 201;
     }
     .nav-logo span { color: var(--dark); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+
+    /* desktop links */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
     .nav-links a {
       font-size: 0.8rem;
       letter-spacing: 0.06em;
@@ -66,17 +76,85 @@
       padding: 0.5rem 1.2rem;
       border-radius: 100px;
       font-weight: 600 !important;
+      transition: background 0.2s !important;
     }
     .nav-cta:hover { background: var(--brown) !important; }
 
-    /* ── BUTTONS ── */
+    /* hamburger button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 201;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%; height: 2px;
+      background: var(--dark);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    /* animate to X */
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile drawer */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg);
+      z-index: 199;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+    }
+    .mobile-menu a {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--caramel); }
+    .mobile-menu .mobile-cta {
+      background: var(--caramel);
+      color: #fff !important;
+      padding: 0.75rem 2rem;
+      border-radius: 100px;
+      font-size: 1rem !important;
+      font-family: 'Instrument Sans', sans-serif !important;
+      font-weight: 600 !important;
+      margin-top: 0.5rem;
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       BUTTONS
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     .btn-fill {
       background: var(--dark);
       color: #fff;
-      padding: 0.8rem 1.8rem;
+      padding: 0.85rem 1.8rem;
       border-radius: 100px;
       text-decoration: none;
-      font-size: 0.83rem;
+      font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: 0.03em;
       display: inline-block;
@@ -87,10 +165,10 @@
     .btn-outline {
       border: 1.5px solid var(--brown);
       color: var(--brown);
-      padding: 0.8rem 1.8rem;
+      padding: 0.85rem 1.8rem;
       border-radius: 100px;
       text-decoration: none;
-      font-size: 0.83rem;
+      font-size: 0.85rem;
       font-weight: 600;
       display: inline-block;
       transition: border-color 0.2s, color 0.2s, transform 0.2s;
@@ -100,7 +178,7 @@
     .btn-ghost {
       color: var(--caramel);
       text-decoration: none;
-      font-size: 0.83rem;
+      font-size: 0.85rem;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
@@ -110,7 +188,9 @@
     .btn-ghost:hover { gap: 0.65rem; }
     .btn-ghost::after { content: '→'; }
 
-    /* ── HERO ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       HERO
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     .hero {
       min-height: 100vh;
       display: grid;
@@ -152,7 +232,7 @@
 
     .hero h1 {
       font-family: 'Fraunces', serif;
-      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
       font-weight: 800;
       line-height: 1.0;
       color: var(--dark);
@@ -178,7 +258,7 @@
     }
     .hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center; }
 
-    /* hero image */
+    /* hero image collage — desktop only */
     .hero-visual { position: relative; z-index: 1; height: 520px; }
     .hero-img-main {
       position: absolute;
@@ -233,7 +313,21 @@
       z-index: 2;
     }
 
-    /* ── MARQUEE ── */
+    /* mobile hero image — single full-width photo */
+    .hero-img-mobile {
+      display: none;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: 0 16px 40px rgba(60,30,0,0.12);
+      margin-bottom: 1rem;
+    }
+    .hero-img-mobile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       MARQUEE
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     .marquee-wrap {
       background: var(--caramel);
       padding: 0.8rem 0;
@@ -249,15 +343,17 @@
       font-size: 0.95rem;
       font-weight: 600;
       color: rgba(255,255,255,0.88);
-      padding: 0 2.2rem;
+      padding: 0 2rem;
     }
-    .marquee-item span { color: var(--yellow); margin-left: 2.2rem; }
+    .marquee-item span { color: var(--yellow); margin-left: 2rem; }
     @keyframes marquee {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
 
-    /* ── SECTION LABEL ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       SECTION LABEL
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     .label {
       font-size: 0.7rem;
       font-weight: 600;
@@ -267,7 +363,9 @@
       margin-bottom: 0.55rem;
     }
 
-    /* ── THREE CARDS ROW ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       THREE CARDS
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     .cards-row {
       padding: 6rem 3.5rem;
       display: grid;
@@ -276,7 +374,6 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .card {
       background: var(--panel);
       border-radius: 20px;
@@ -285,30 +382,14 @@
       flex-direction: column;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 20px 50px rgba(60,30,0,0.09);
-    }
-    .card-img {
-      width: 100%;
-      aspect-ratio: 3/2;
-      overflow: hidden;
-    }
-    .card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      transition: transform 0.4s;
-    }
+    .card:hover { transform: translateY(-7px); box-shadow: 0 20px 50px rgba(60,30,0,0.09); }
+    .card-img { width: 100%; aspect-ratio: 3/2; overflow: hidden; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
     .card:hover .card-img img { transform: scale(1.05); }
-    .card-body {
-      padding: 1.7rem 1.8rem 2rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+    .card-body { padding: 1.7rem 1.8rem 2rem; display: flex; flex-direction: column; flex: 1; }
     .card-body h2 {
       font-family: 'Fraunces', serif;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--dark);
       line-height: 1.2;
@@ -316,15 +397,11 @@
       letter-spacing: -0.01em;
     }
     .card-body h2 em { font-style: italic; font-weight: 400; color: var(--caramel); }
-    .card-body p {
-      font-size: 0.9rem;
-      line-height: 1.75;
-      color: var(--muted);
-      flex: 1;
-      margin-bottom: 1.6rem;
-    }
+    .card-body p { font-size: 0.9rem; line-height: 1.75; color: var(--muted); flex: 1; margin-bottom: 1.6rem; }
 
-    /* ── VISIT BANNER ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       VISIT BANNER
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     .visit-banner {
       background: var(--dark);
       padding: 5rem 3.5rem;
@@ -352,20 +429,11 @@
       color: #fff;
       line-height: 1.1;
       letter-spacing: -0.02em;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.9rem;
     }
     .visit-banner h2 em { font-style: italic; font-weight: 400; color: var(--peach); }
-    .visit-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin-top: 0.2rem;
-    }
-    .visit-info span {
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.55);
-      font-weight: 400;
-    }
+    .visit-info { display: flex; flex-direction: column; gap: 0.5rem; }
+    .visit-info span { font-size: 0.88rem; color: rgba(255,255,255,0.55); }
     .visit-info span strong { color: rgba(255,255,255,0.85); font-weight: 600; }
     .visit-banner .btn-fill {
       background: var(--caramel);
@@ -374,7 +442,9 @@
     }
     .visit-banner .btn-fill:hover { background: var(--peach); color: var(--dark); }
 
-    /* ── FOOTER ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       FOOTER
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     footer {
       background: var(--dark);
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -385,53 +455,125 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-    .footer-logo {
-      font-family: 'Fraunces', serif;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--caramel);
-    }
-    .footer-links { display: flex; gap: 1.6rem; list-style: none; }
-    .footer-links a {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.4);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+    .footer-logo { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 800; color: var(--caramel); }
+    .footer-links { display: flex; gap: 1.6rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.4); text-decoration: none; font-weight: 500; transition: color 0.2s; }
     .footer-links a:hover { color: #fff; }
     .footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.22); }
 
-    /* ── FADE IN ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       ANIMATIONS
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    .stagger > * {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+    .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0s; }
     .stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.1s; }
     .stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.2s; }
 
-    /* ── RESPONSIVE ── */
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       RESPONSIVE — TABLET (max 960px)
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
     @media (max-width: 960px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; padding: 6.5rem 1.5rem 3rem; }
+      .hamburger { display: flex; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 5.5rem 1.5rem 3rem;
+        min-height: unset;
+        gap: 1.5rem;
+      }
+      .hero::after { display: none; }
       .hero-visual { display: none; }
-      .cards-row { grid-template-columns: 1fr; padding: 3.5rem 1.5rem; }
-      .visit-banner { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
-      footer { padding: 1.8rem 1.5rem; flex-direction: column; text-align: center; }
+      .hero-img-mobile { display: block; }
+
+      .hero h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+      .hero-desc { max-width: 100%; font-size: 0.97rem; }
+      .hero-ctas { gap: 0.75rem; }
+      .btn-fill, .btn-outline { padding: 0.8rem 1.5rem; font-size: 0.82rem; }
+
+      .cards-row {
+        grid-template-columns: 1fr;
+        padding: 3rem 1.5rem;
+        gap: 1.5rem;
+      }
+
+      /* horizontal card on tablet */
+      .card {
+        flex-direction: row;
+        border-radius: 16px;
+      }
+      .card-img {
+        width: 40%;
+        flex-shrink: 0;
+        aspect-ratio: unset;
+      }
+      .card-body { padding: 1.4rem 1.5rem; }
+      .card-body h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+      .card-body p { font-size: 0.86rem; margin-bottom: 1.2rem; }
+
+      .visit-banner {
+        grid-template-columns: 1fr;
+        padding: 3.5rem 1.5rem;
+        gap: 2rem;
+        text-align: center;
+      }
+      .visit-info { align-items: center; }
+
+      footer {
+        padding: 2rem 1.5rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.2rem;
+      }
+      .footer-links { justify-content: center; gap: 1.2rem; }
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━
+       RESPONSIVE — MOBILE (max 500px)
+    ━━━━━━━━━━━━━━━━━━━━━━━━ */
+    @media (max-width: 500px) {
+      .hero { padding: 5rem 1.2rem 2.5rem; }
+      .hero h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+      .hero-tag { font-size: 0.65rem; }
+      .hero-desc { font-size: 0.93rem; margin-bottom: 1.8rem; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+      .btn-fill, .btn-outline { width: 100%; text-align: center; padding: 0.9rem 1rem; }
+
+      /* cards go back to vertical stacking on small phones */
+      .card { flex-direction: column; }
+      .card-img { width: 100%; aspect-ratio: 3/2; }
+      .card-body h2 { font-size: 1.25rem; }
+
+      .cards-row { padding: 2.5rem 1.2rem; }
+
+      .marquee-item { font-size: 0.85rem; padding: 0 1.4rem; }
+
+      .visit-banner { padding: 3rem 1.2rem; }
+      .visit-banner h2 { font-size: 1.8rem; }
+      .visit-info span { font-size: 0.82rem; }
+      .visit-banner .btn-fill { width: 100%; text-align: center; }
+
+      footer { padding: 1.8rem 1.2rem; }
+      .footer-links { gap: 0.9rem; }
+
+      .mobile-menu a { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- MOBILE DRAWER (hidden by default) -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://www.instagram.com/puffle_cafe/" target="_blank" onclick="closeMenu()">Menu</a>
+  <a href="https://www.instagram.com/puffle_cafe/" target="_blank" onclick="closeMenu()">Drinks</a>
+  <a href="https://www.instagram.com/puffle_cafe/" target="_blank" onclick="closeMenu()">About</a>
+  <a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank" onclick="closeMenu()">Visit</a>
+  <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="mobile-cta" onclick="closeMenu()">Instagram ↗</a>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -443,6 +585,9 @@
     <li><a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank">Visit</a></li>
     <li><a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="nav-cta">Instagram ↗</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -454,6 +599,13 @@
       <span class="accent">Savoury,</span><br>
       <span class="pill">Unforgettable.</span>
     </h1>
+
+    <!-- Mobile-only image — shows between headline and description -->
+    <div class="hero-img-mobile">
+      <!-- REPLACE with real Puffle food photo, e.g. src="food.jpg" -->
+      <img src="Puffle Cafe food.jpg" alt="Puffle Cafe food" />
+    </div>
+
     <p class="hero-desc">
       Puffle waffles, crepes, Japanese cheesecake, cream puffs — and drinks you won't find anywhere else in Guelph. Come for the food. Stay for the vibe.
     </p>
@@ -462,13 +614,15 @@
       <a href="https://maps.google.com/?q=219+Silvercreek+Pkwy+N+Unit+7+Guelph+ON" target="_blank" class="btn-outline">Find Us</a>
     </div>
   </div>
+
+  <!-- Desktop-only image collage -->
   <div class="hero-visual">
     <!-- REPLACE with real Puffle Cafe food photos from Instagram -->
     <div class="hero-img-main">
       <img src="Puffle Cafe food.jpg" alt="Puffle Cafe food" />
     </div>
     <div class="hero-img-small">
-      <img src="Drinks.jpg" alt="Puffle Cafe drinks" />
+      <img src="drinks.jpg" alt="Puffle Cafe drinks" />
     </div>
     <div class="hero-badge">
       <span class="big">80+</span>
@@ -491,7 +645,6 @@
     <span class="marquee-item">Iced Strawberry Matcha <span>✦</span></span>
     <span class="marquee-item">Thai Milk Tea <span>✦</span></span>
     <span class="marquee-item">Egg Coffee <span>✦</span></span>
-    <!-- duplicate for seamless loop -->
     <span class="marquee-item">Puffle Waffles <span>✦</span></span>
     <span class="marquee-item">Savory Crepes <span>✦</span></span>
     <span class="marquee-item">Sweet Crepes <span>✦</span></span>
@@ -508,44 +661,35 @@
 <!-- THREE SECTION CARDS -->
 <div class="cards-row stagger">
 
-  <!-- MENU CARD -->
   <div class="card">
-    <!-- REPLACE with a real food photo, e.g. src="crepe.jpg" -->
-    <div class="card-img"><img src="Menu.jpg" alt="Puffle Cafe menu" /></div>
+    <!-- REPLACE: src="crepe.jpg" -->
+    <div class="card-img"><img src="menu.jpg" alt="Puffle Cafe menu" /></div>
     <div class="card-body">
       <p class="label">Menu</p>
       <h2>Crafted with <em>love</em>.</h2>
-      <p>
-        Cheese puffle waffles, chicken crepes, custard cream puffs, Japanese cheesecake — plus sweet crepes loaded with strawberries, Nutella, and more. Something for everyone.
-      </p>
+      <p>Cheese puffle waffles, chicken crepes, custard cream puffs, Japanese cheesecake — plus sweet crepes loaded with strawberries, Nutella, and more.</p>
       <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-ghost">See Full Menu</a>
     </div>
   </div>
 
-  <!-- DRINKS CARD -->
   <div class="card">
-    <!-- REPLACE with a real drinks photo, e.g. src="drinks.jpg" -->
-    <div class="card-img"><img src="Drinks2.jpg" alt="Puffle Cafe drinks" /></div>
+    <!-- REPLACE: src="drinks.jpg" -->
+    <div class="card-img"><img src="drinks2.jpg" alt="Puffle Cafe drinks" /></div>
     <div class="card-body">
       <p class="label">Drinks</p>
       <h2>Sips you won't find <em>anywhere else.</em></h2>
-      <p>
-        Vietnamese drip coffee, London Fog, iced strawberry matcha, egg coffee, Thai milk tea, and more. Every drink is made to pair perfectly with your order.
-      </p>
+      <p>Vietnamese drip coffee, London Fog, iced strawberry matcha, egg coffee, Thai milk tea, and more — each made to pair perfectly with your order.</p>
       <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-ghost">See All Drinks</a>
     </div>
   </div>
 
-  <!-- ABOUT CARD -->
   <div class="card">
-    <!-- REPLACE with a real interior/café photo, e.g. src="interior.jpg" -->
-    <div class="card-img"><img src="Interior.jpg" alt="Puffle Cafe interior" /></div>
+    <!-- REPLACE: src="interior.jpg" -->
+    <div class="card-img"><img src="interior.jpg" alt="Puffle Cafe interior" /></div>
     <div class="card-body">
       <p class="label">About Us</p>
       <h2>Delicious food <em>everyone</em> can appreciate.</h2>
-      <p>
-        A cozy Guelph café serving up unique, carefully crafted food and drinks in a warm, welcoming atmosphere. Fantastic vegetarian options available. Perfect for a solo visit or a gathering with friends.
-      </p>
+      <p>A cozy Guelph café with a unique menu, warm atmosphere, and friendly staff. Fantastic vegetarian options. Perfect for solo visits or gatherings with friends.</p>
       <a href="https://www.instagram.com/puffle_cafe/" target="_blank" class="btn-ghost">Learn More</a>
     </div>
   </div>
@@ -559,7 +703,7 @@
     <h2>Find us in <em>Guelph.</em></h2>
     <div class="visit-info">
       <span>📍 <strong>219 Silvercreek Pkwy N, Unit 7 — Guelph, ON</strong></span>
-      <span>🕙 <strong>Sun–Thu:</strong> 10am – 6pm &nbsp;|&nbsp; <strong>Fri–Sat:</strong> 10am – 8pm</span>
+      <span>🕙 <strong>Sun–Thu:</strong> 10am – 6pm &nbsp;·&nbsp; <strong>Fri–Sat:</strong> 10am – 8pm</span>
       <span>📞 <strong>(519) 265-2200</strong> &nbsp;·&nbsp; ✉️ <strong>pufflecafe7@gmail.com</strong></span>
     </div>
   </div>
@@ -580,9 +724,40 @@
 </footer>
 
 <script>
+  // ── Hamburger menu ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    mobileMenu.style.display = 'flex';
+    requestAnimationFrame(() => mobileMenu.classList.add('open'));
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { mobileMenu.style.display = 'none'; }, 300);
+  }
+
+  hamburger.addEventListener('click', () => {
+    menuOpen ? closeMenu() : openMenu();
+  });
+
+  // close on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menuOpen) closeMenu();
+  });
+
+  // ── Scroll animations ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
 </script>
 </body>
